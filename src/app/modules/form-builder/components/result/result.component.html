@@ -1,0 +1,16 @@
+<div *ngFor="let question of questions">
+  --------------------------------------
+  <h3>{{ question.question }}</h3>
+
+  <div *ngIf="!question.listType; else other_question">
+    <p>{{ question.answer }}</p>
+  </div>
+
+  <ng-template #other_question>
+    <div *ngFor="let item of question.list">
+      <label *ngIf="item.value">{{ item.name }} </label>
+    </div>
+  </ng-template>
+</div>
+
+<a routerLink="../builder">back</a>

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Add new question</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <div>
+      <p>question text:</p>
+      <input
+        placeholder="write your question..."
+        type="text"
+        formControlName="questionText"
+      />
+      <div
+        *ngIf="
+          (form.controls['questionText'].touched || submitted) &&
+          form.controls['questionText'].errors?.required
+        "
+      >
+        <span class="text-danger"> questionText is required </span>
+      </div>
+    </div>
+
+    <div>
+      <select formControlName="type" (change)="onRadioBtnChange()">
+        <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <ul *ngIf="showOptionsField" formArrayName="options">
+      <li *ngFor="let optionControl of options?.controls; let i = index">
+        <input [formControlName]="i" type="text" />
+        <button (click)="removeAnswerControl(i)">delete</button>
+      </li>
+      <button (click)="addAnswerControl()">add option</button>
+    </ul>
+
+    <div>
+      <label for="withOwnAnswer">Allow own answer</label>
+      <input
+        name="withOwnAnswer"
+        type="checkbox"
+        formControlName="withOwnAnswer"
+      />
+    </div>
+
+    <div>
+      <label for="requiredField">RequiredField</label>
+      <input
+        name="requiredField"
+        type="checkbox"
+        formControlName="requiredField"
+      />
+      <div *ngIf="form.controls['requiredField'].errors?.required && submitted">
+        <span class="text-danger"> requiredField is required true </span>
+      </div>
+    </div>
+
+    <div class="column-center">
+      <button class="create-edit__save-btn" (click)="onSubmit()">save</button>
+    </div>
+  </form>
+</div>

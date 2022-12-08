@@ -1,0 +1,38 @@
+<div>
+  <input
+    type="button"
+    name=""
+    id=""
+    value="Add Question"
+    (click)="addQuestion()"
+  />
+</div>
+
+<div *ngFor="let question of questions">
+  --------------------------------------
+  <h3>{{ question.question }}</h3>
+
+  <div *ngIf="!question.listType; else other_question">
+    <textarea cols="30" rows="10" [(ngModel)]="question.answer"></textarea>
+  </div>
+
+  <ng-template #other_question>
+    <div *ngFor="let item of question.list">
+      <input type="checkbox" [(ngModel)]="item.value" />
+      <label *ngIf="!item.ownAnswer; else show_input">{{ item.name }} </label>
+      <ng-template #show_input
+        ><input type="text" [(ngModel)]="item.name"
+      /></ng-template>
+    </div>
+  </ng-template>
+</div>
+<div>
+  <input
+    type="button"
+    name=""
+    id=""
+    value="Review my answer"
+    routerLink="../result"
+    (click)="reviewAnswer()"
+  />
+</div>
